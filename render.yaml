@@ -1,0 +1,39 @@
+services:
+  # A Docker web service
+  - type: web
+    name: whatsapp-drive-app
+    runtime: python
+    plan: free
+    autoDeploy: false
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+
+databases:
+  # A database with one read replica
+  - name: elephant
+    databaseName: mydb # Optional (Render may add a suffix)
+    user: adrian # Optional
+    ipAllowList: # Optional (defaults to allow all)
+      - source: 203.0.113.4/30
+        description: office
+      - source: 198.51.100.1
+        description: home
+    readReplicas:
+      - name: elephant-replica
+
+  # A database that allows only private network connections
+  # - name: private database
+  #   databaseName: private
+  #   ipAllowList: [] # No entries in the IP allow list
+
+  # A database with specified disk size and storage autoscaling
+  # - name: pachyderm
+  #   plan: basic-1gb
+  #   diskSizeGB: 35
+  #   storageAutoscalingEnabled: true
+
+  # A database that enables high availability
+  # - name: highly available database
+  #   plan: pro-8gb
+  #   highAvailability:
+  #     enabled: true
