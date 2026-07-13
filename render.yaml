@@ -6,7 +6,7 @@ services:
     plan: free
     autoDeploy: false
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn app.webhook.main:app --host 0.0.0.0 --port $PORT
 
 databases:
   # A database with one read replica
